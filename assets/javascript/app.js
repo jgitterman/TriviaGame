@@ -3,7 +3,15 @@ var gameActive = false;
 var labels = ["a0", "a1", "a2", "a3"];
 var correctAnswers = 0;
 var wrongAnswers = 0;
+var gameTimerId = setInterval(countdown, 1000);
+function countdown() {
+  timeLeft--;
+  $("#timeLeft").text(timeLeft);
 
+  if (timeLeft === 0) {
+    endGame();
+  }
+}
 
 // Set gameActive to false
 if (gameActive === false) {
@@ -36,7 +44,7 @@ var startGame = $("#startGame").on("click", function () {
 // Store the questions in an array
 var questionArr = [{
   name: "one",
-  question: "1: What is the first rule of Fight Club",
+  question: "1: What is the first rule of Fight Club?",
   answerArr: [
     "You do not talk about what goes on here.",
     "Don't mention this club to anyone.",
@@ -47,7 +55,7 @@ var questionArr = [{
   divClass: ".one",
 }, {
   name: "two",
-  question: "2: What is the opening line of Fight Club (the movie).",
+  question: "2: What is the opening line of Fight Club (the movie)?",
   answerArr: [
     "People are always asking me if I know Tyler Durden.",
     "With a gun barrel between your teeth you speak only in vowels.",
@@ -58,7 +66,7 @@ var questionArr = [{
   divClass: ".two"
 }, {
   name: "three",
-  question: "3: What is the narrator's spirit animal",
+  question: "3: What is the narrator's spirit animal?",
   answerArr: [
     "A seal.",
     "A penguin.",
@@ -87,62 +95,62 @@ var questionArr = [{
     "Whale vomit.",
     "Cat urine.",
   ],
-  correct: " liposuction fat.",
+  correct: "Liposuction fat.",
   divClass: ".five",
 }, {
   name: "six",
   question: '6: Who are the "Space Monkeys"?',
   answerArr: [
-    " The people that participate in Fight Club. ",
-    " The people that abide by the rules of society. ",
-    " The people that are a part of Project Mayhem. ",
-    " Monkey's sent into outer space. ",
+    "The people that abide by the rules of society.",
+    "The people that participate in Fight Club.",
+    "The people that are a part of Project Mayhem.",
+    "Monkey's sent into outer space.",
   ],
-  correct: " The people that are a part of Project Mayhem.",
+  correct: "The people that are a part of Project Mayhem.",
   divClass: ".six",
 }, {
   name: "seven",
-  question: "7: ",
+  question: "7: What would happen to anyone that tried to shut down Project Mayhem",
   answerArr: [
-    " The people that participate in Fight Club. ",
-    " The people that abide by the rules of society. ",
-    " The people that are a part of Project Mayhem. ",
-    " Monkey's sent into outer space. ",
+    "They would get beat up.",
+    "They would have their balls cut off.",
+    "They would be kindnapped.",
+    "They would be killed.",
   ],
-  correct: " The people that are a part of Project Mayhem.",
+  correct: "They would have their balls cut off.",
   divClass: ".seven",
 }, {
   name: "eight",
-  question: "8: ",
+  question: "8: What can you find in every scene throughout the movie",
   answerArr: [
-    " The people that participate in Fight Club. ",
-    " The people that abide by the rules of society. ",
-    " The people that are a part of Project Mayhem. ",
-    " Monkey's sent into outer space. ",
+    "A naked woman.",
+    "A condom.",
+    "A bottle of beer.",
+    "A starbucks cup.",
   ],
-  correct: " The people that are a part of Project Mayhem.",
+  correct: "A starbucks cup.",
   divClass: ".eight",
 }, {
   name: "nine",
-  question: "9: ",
+  question: "9: Who did the studio want to play Marla Singer",
   answerArr: [
-    " The people that participate in Fight Club. ",
-    " The people that abide by the rules of society. ",
-    " The people that are a part of Project Mayhem. ",
-    " Monkey's sent into outer space. ",
+    "Courtney Love.",
+    "Reese Witherspoon.",
+    "Winona Ryder.",
+    "Helena Bonham Carter.",
   ],
-  correct: " The people that are a part of Project Mayhem.",
+  correct: "Reese Witherspoon.",
   divClass: ".nine",
 }, {
   name: "ten",
   question: "10: Who is Tyler Durden?",
   answerArr: [
-    " The narrators alter ego. ",
-    " The creator of Fight Club. ",
-    " The creator of Project Mayhem. ",
-    " All of the above. ",
+    "The narrators alter ego.",
+    "The creator of Fight Club.",
+    "The creator of Project Mayhem.",
+    "All of the above.",
   ],
-  correct: " All of the above.",
+  correct: "All of the above.",
   divClass: ".ten",
 },
 ];
@@ -165,14 +173,14 @@ var stopGame = $("#submit").on("click", endGame);
 
 // Create an end game function and insert in when the timer hits "0" and when "SUBMIT" button is clicked
 function endGame(event) {
-
+  clearInterval($(gameTimerId));
   for (let i = 0; i < questionArr.length; i++) {
-    if ($(`input[name='${questionArr[i].answerArr}']:checked`).val() === questionArr[i].correct) {
+    if ($(`input[name='${questionArr[i].name}']:checked`).val() === questionArr[i].correct) {
       correctAnswers++;
-      $("#correctAnswers").text(correctAnswers);
+      $(".correctAnswers").text("Correct Answers: " + correctAnswers);
     } else {
       wrongAnswers++;
-      $("#wrongAnswers").text(wrongAnswers);
+      $(".wrongAnswers").text("Incorrect Answers: " + wrongAnswers);
     }
     console.log($(questionArr[i].correctAnswers))
   }
