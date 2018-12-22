@@ -3,15 +3,6 @@ var gameActive = false;
 var labels = ["a0", "a1", "a2", "a3"];
 var correctAnswers = 0;
 var wrongAnswers = 0;
-var gameTimerId = setInterval(countdown, 1000);
-function countdown() {
-  timeLeft--;
-  $("#timeLeft").text(timeLeft);
-
-  if (timeLeft === 0) {
-    endGame();
-  }
-}
 
 // Set gameActive to false
 if (gameActive === false) {
@@ -173,7 +164,6 @@ var stopGame = $("#submit").on("click", endGame);
 
 // Create an end game function and insert in when the timer hits "0" and when "SUBMIT" button is clicked
 function endGame(event) {
-  clearInterval($(gameTimerId));
   for (let i = 0; i < questionArr.length; i++) {
     if ($(`input[name='${questionArr[i].name}']:checked`).val() === questionArr[i].correct) {
       correctAnswers++;
@@ -189,8 +179,6 @@ function endGame(event) {
   console.log("Switched to Results Page.");
   event ? event.preventDefault() : console.log("no event");
 }
-
-
 
 // THINGS I STILL NEED TO FIGURE OUT
   // How do I get the answers to work
